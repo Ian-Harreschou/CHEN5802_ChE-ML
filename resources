@@ -19,3 +19,15 @@ abstract = {We introduce physics-informed neural networks – neural networks th
     note={\url{http://www.deeplearningbook.org}},
     year={2016}
 }
+
+@article{MATMINER,
+title = {Matminer: An open source toolkit for
+materials data mining},
+journal = {Computational Materials Science},
+volume = {152},
+pages = {60-69},
+year = {2018},
+author = {Ward, L., Dunn, A., Faghaninia, A., Zimmermann, N. E. R., Bajaj, S., Wang, Q.,
+Montoya, J. H., Chen, J., Bystrom, K., Dylla, M., Chard, K., Asta, M., Persson,
+K., Snyder, G. J., Foster, I., Jain, A.,}
+}
