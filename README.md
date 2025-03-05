@@ -5,6 +5,10 @@ CHEN5802 (UofM) - Machine Learning Applications in ChemE &amp; MatSci
 
 This repository represents a collaborative project for a course offered at the University of Minnesota on the application of machine learning (ML) techniques to chemical engineering and materials science problems. The project explores how ML techniques can be used to approximate interatomic forces in molecules, aiming to enhance computational efficiency in molecular simulations.
 
+## Dependencies
+
+Requires Python 3.9 or newer due to `scikit-learn` compatibility. Other module dependencies are listed in `dependencies.txt`.
+
 ## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
