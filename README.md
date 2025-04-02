@@ -13,6 +13,10 @@ Requires Python 3.9 or newer due to `scikit-learn` compatibility. Other module d
 
 https://matpes.ai/
 
+## MLPs:
+
+CHGNet: https://github.com/CederGroupHub/chgnet/blob/main/examples/fine_tuning.ipynb
+M3GNet: 
 
 ## License
 
