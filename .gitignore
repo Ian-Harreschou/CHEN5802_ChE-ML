@@ -169,3 +169,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# don't track large data files so we don't overwhelm repo storage
+data/Fe-O.json.gz
+data/MatPES-PBE-2025.1.json.gz
+data/MatPES-PBE-atoms.json.gz
