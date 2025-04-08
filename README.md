@@ -9,6 +9,15 @@ This repository represents a collaborative project for a course offered at the U
 
 Requires Python 3.9 or newer due to `scikit-learn` compatibility. Other module dependencies are listed in `deps.txt`.
 
+## Data
+
+https://matpes.ai/
+
+## MLPs:
+
+CHGNet: https://github.com/CederGroupHub/chgnet/blob/main/examples/fine_tuning.ipynb
+M3GNet: 
+
 ## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
