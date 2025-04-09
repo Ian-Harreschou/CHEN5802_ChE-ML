@@ -171,6 +171,4 @@ cython_debug/
 .pypirc
 
 # ignore large data files to not overwhelm the repo
-data/Fe-O.json.gz
-data/MatPES-PBE-2025.1.json.gz
-data/MatPES-PBE-atoms.json.gz
+data/*.gz
