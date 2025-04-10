@@ -5,7 +5,22 @@ import os
 import sys
 from pymatgen.core.structure import Structure
 from typing import List, Optional
+import gzip 
 
+# ========= Utils =========
+def read_json(json_file):
+    with open(json_file, 'r') as f:
+        data = json.load(f)
+    return data
+
+def write_json(json_file, data):
+    with open(json_file, 'w') as f:
+        json.dump(data, f, indent=4)
+
+def extract_json_from_gzip(gzip_file, output_json):
+    with gzip.open(gzip_file, 'rb') as f_in:
+        with open(output_json, 'wb') as f_out:
+            f_out.write(f_in.read())
 
 class Filter:
     """

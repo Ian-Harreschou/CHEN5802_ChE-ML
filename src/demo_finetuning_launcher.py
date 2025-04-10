@@ -1,10 +1,7 @@
 import os
 import subprocess
 import sys
-
-# Adjust the line below to point to where you are storing your source code
 sys.path.append(os.path.expanduser("~/bin/CHGNet-finetuning"))
-
 from data_preprocessing import Filter, DataExtracter, read_json, write_json, extract_json_from_gzip
 from chgnet.model import CHGNet
 from chgnet.trainer import Trainer
@@ -27,11 +24,17 @@ EPOCHS = 5
 TRAIN_COMPOSITION_MODEL = False
 
 GRAPHS = True
+
+ATOM_GRAPH_CUTOFF = 7
+
+BOND_GRAPH_CUTOFF = 3
+
+READY_TO_TRAIN = False
 # =========================================
 
 def main():
 
-    ready_to_train = False
+    ready_to_train = READY_TO_TRAIN
 
     # Checks inside DATA_PATH for .json or .gz file
     # If both types are present simply read the .json file
@@ -60,8 +63,8 @@ def main():
         remake = False
         verbose = True
         num_graphs = 0
-        atom_graph_cutoff = 7
-        bond_graph_cutoff = 3
+        atom_graph_cutoff = ATOM_GRAPH_CUTOFF
+        bond_graph_cutoff = BOND_GRAPH_CUTOFF
 
         # Make the graph directory if it doesn't exist
         if not os.path.exists(graph_dir):
@@ -140,7 +143,7 @@ def main():
             if not os.path.exists(save_dir):
                 os.makedirs(save_dir)
 
-            save_name = MATERIAL_TYPE + 'LR_' + str(LEARNING_RATE) + 'E_' + str(EPOCHS) + str(TRAIN_COMPOSITION_MODEL) + 'AC_' + str(atom_graph_cutoff) + 'BC' + str(bond_graph_cutoff)
+            save_name = MATERIAL_TYPE + 'LR_' + str(LEARNING_RATE) + 'E_' + str(EPOCHS) + str(TRAIN_COMPOSITION_MODEL) + 'AC_' + str(ATOM_GRAPH_CUTOFF) + 'BC' + str(BOND_GRAPH_CUTOFF)
 
             trainer.train(train_loader, 
                         val_loader, 

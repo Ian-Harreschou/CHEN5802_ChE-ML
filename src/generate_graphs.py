@@ -6,7 +6,6 @@ import time
 import multiprocessing as multiproc
 from pymatgen.core import Structure
 from chgnet.graph import CrystalGraphConverter
-# Adjust the line below to point to where you are storing your source code
 sys.path.append(os.path.expanduser("~/bin/CHGNet-finetuning"))
 from data_preprocessing import Filter, DataExtracter, read_json, write_json
 
