@@ -4,12 +4,10 @@ import json
 import os
 import sys
 from pymatgen.core.structure import Structure
-from chgnet.data.dataset import StructureData, get_train_val_test_loader
-import torch
-from typing import List, Optional, Union
+from typing import List, Optional
+
 
 class Filter:
-    
     """
     A class to filter a dataset of materials based on various criteria.
     Attributes:
@@ -28,7 +26,7 @@ class Filter:
         filter = Filter(data)
         filtered_data = filter.filter(n_elements=2, contains_elements=["Fe"], bandgap_min=1.0)
     """
-    
+
     def __init__(self, data: List[dict]):
         self.data = data
 
@@ -94,7 +92,6 @@ class Filter:
             raise ValueError(f"Unknown material type: {mtype}")
         
 class DataExtracter:
-    
     """
     A class to extract all the relevant information you need to fine-tune CHGNet (note that magmoms and stresses are optional but forces, energies and structures are required).
     Attributes:
@@ -106,7 +103,6 @@ class DataExtracter:
         get_magmoms: Returns a list of magnetic moments.
         get_stresses: Returns a list of stresses.
     """
-
     def __init__(self, data: List[dict]):
         self.data = data
 
@@ -123,7 +119,16 @@ class DataExtracter:
         return [Structure.from_dict(d.get("structure", {})) for d in self.data]
     
     def get_magmoms(self) -> List[float]:
-        return [d.get("magmoms", []) for d in self.data]
+        magmoms = []
+        for entry in self.data:
+            structure = entry.get("structure", {})
+            sites = structure.get("sites", [])
+            magmom = [
+                s.get("properties", {}).get("magmom", 0.0)
+                for s in sites
+            ]
+            magmoms.append(magmom)
+        return magmoms
     
     def get_stresses(self) -> List[List[float]]:
         return [d.get("stress", []) for d in self.data]
