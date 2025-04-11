@@ -113,7 +113,7 @@ def run_with_pool(n_procs=16):
     with open(os.path.join(GRAPH_DIR, "isolated_atom_graphs.txt"), "w") as f:
         f.write(str(isolated_atom_graphs))
 
-    print(f"✅ Done in {time.time() - start_time:.2f} seconds.")
+    print(f"Done in {time.time() - start_time:.2f} seconds.")
 
 # === RUN ===
 if __name__ == "__main__":
