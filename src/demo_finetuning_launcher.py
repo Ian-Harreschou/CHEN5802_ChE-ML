@@ -28,6 +28,10 @@ ATOM_GRAPH_CUTOFF = 7
 BOND_GRAPH_CUTOFF = 3
 
 READY_TO_TRAIN = False
+
+JSON_FILE = 'MatPES-PBE-2025.1.json'
+
+ZIPPED_JSON_FILE = JSON_FILE + '.gz'
 # =========================================
 
 sys.path.append(os.path.expanduser(SRC_CODE_PATH))
@@ -37,21 +41,17 @@ def main():
 
     ready_to_train = READY_TO_TRAIN
 
-    # Checks inside DATA_PATH for .json or .gz file
-    # If both types are present simply read the .json file
-    # If only .gz file is present, extract it and read the .json file
+    json_file = os.path.join(DATA_PATH, JSON_FILE)
+    gz_file = os.path.join(DATA_PATH, ZIPPED_JSON_FILE)
 
-    for file in os.listdir(DATA_PATH):
-        if file.endswith('.json'):
-            all_data = read_json(os.path.join(DATA_PATH, file))
-            break
-        elif file.endswith('.gz'):
-            extract_json_from_gzip(os.path.join(DATA_PATH, file), os.path.join(DATA_PATH, 'MatPES-PBE-2025.1.json'))
-            all_data = read_json(os.path.join(DATA_PATH, 'MatPES-PBE-2025.1.json'))
-            break
-        else:
-            raise ValueError(f"No data files found in {DATA_PATH}")
-
+    if os.path.exists(json_file):
+        all_data = read_json(json_file)
+    elif os.path.exists(gz_file):
+        extract_json_from_gzip(gz_file, json_file)
+        all_data = read_json(json_file)
+    else:
+        raise ValueError(f"No data files found in {DATA_PATH}")
+        
     # Filter the dataset
     filter = Filter(all_data)
     filtered_data = filter.filter(material_type=MATERIAL_TYPE)
@@ -103,8 +103,8 @@ def main():
         if ready_to_train:
             
             dataset = GraphData(
-                        graph_path = os.path.join(os.getcwd(),'tmo-graphs'),
-                        labels = os.path.join(os.getcwd(),'tmo-graphs/labels.json')
+                        graph_path = graph_dir,
+                        labels = os.path.join(graph_dir,'labels.json')
                         )
 
             train_loader, val_loader, test_loader = dataset.get_train_val_test_loader(
