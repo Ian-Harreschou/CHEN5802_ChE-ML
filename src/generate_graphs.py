@@ -17,7 +17,7 @@ num_graphs = 0
 ATOM_GRAPH_CUTOFF = 7
 BOND_GRAPH_CUTOFF = 3
 HOME = os.path.expanduser("~")
-SRC_CODE_PATH = os.path.join(HOME, 'bin','CHGNet-finetuning')
+SRC_CODE_PATH = os.path.join(HOME, 'bin','CHEN5802_ChE-ML','src')
 
 sys.path.append(os.path.expanduser(SRC_CODE_PATH))
 from data_preprocessing import Filter, DataExtracter, read_json, write_json
