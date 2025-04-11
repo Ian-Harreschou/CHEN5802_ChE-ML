@@ -1,8 +1,6 @@
 import os
 import subprocess
 import sys
-sys.path.append(os.path.expanduser("~/bin/CHGNet-finetuning"))
-from data_preprocessing import Filter, DataExtracter, read_json, write_json, extract_json_from_gzip
 from chgnet.model import CHGNet
 from chgnet.trainer import Trainer
 from chgnet.data.dataset import StructureData,GraphData, get_train_val_test_loader
@@ -31,6 +29,9 @@ BOND_GRAPH_CUTOFF = 3
 
 READY_TO_TRAIN = False
 # =========================================
+
+sys.path.append(os.path.expanduser(SRC_CODE_PATH))
+from data_preprocessing import Filter, DataExtracter, read_json, write_json, extract_json_from_gzip
 
 def main():
 
