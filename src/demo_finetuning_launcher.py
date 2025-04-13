@@ -66,6 +66,7 @@ def main():
         num_graphs = 0
         atom_graph_cutoff = ATOM_GRAPH_CUTOFF
         bond_graph_cutoff = BOND_GRAPH_CUTOFF
+        src_code_path = SRC_CODE_PATH
 
         # Make the graph directory if it doesn't exist
         if not os.path.exists(graph_dir):
@@ -95,16 +96,19 @@ def main():
                     f.write(f'ATOM_GRAPH_CUTOFF = {atom_graph_cutoff}\n')
                 elif line.startswith('BOND_GRAPH_CUTOFF ='):
                     f.write(f'BOND_GRAPH_CUTOFF = {bond_graph_cutoff}\n')
+                elif line.startswith('SRC_CODE_PATH ='):
+                    f.write(f'SRC_CODE_PATH = "{src_code_path}"\n')
                 else:
                     f.write(line)
         
         # Running the generate_graphs.py script
         subprocess.run(['python3', dest_generate_graphs_path])
+
         if ready_to_train:
             
             dataset = GraphData(
                         graph_path = graph_dir,
-                        labels = os.path.join(graph_dir,'labels.json')
+                        labels = 'labels.json'
                         )
 
             train_loader, val_loader, test_loader = dataset.get_train_val_test_loader(
