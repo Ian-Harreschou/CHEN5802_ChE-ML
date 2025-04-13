@@ -28,25 +28,25 @@ def get_structure_dicts(json_path):
     all_data = read_json(json_path)
     for entry in all_data:
         struct = Structure.from_dict(entry["structure"])
-        # n_atoms = entry['nsites']
-        # label_data = {
-        #     "energy_per_atom": entry.get("energy") / n_atoms,
-        #     "force": entry.get("forces"),
-        #     "stress": entry.get("stress"),
-        #     "magmom": [
-        #         s.get("properties", {}).get("magmom", 0.0)
-        #         for s in entry["structure"].get("sites", [])
-        #     ],
-        # }
-        
-        ex = DataExtracter([entry])
-
+        n_atoms = entry['nsites']
         label_data = {
-            "energy_per_atom": ex.get_energies_per_atom()[0],
-            "force": ex.get_forces(),
-            "stress": ex.get_stresses(),
-            "magmom": ex.get_magmoms(),
+            "energy_per_atom": entry.get("energy") / n_atoms,
+            "force": entry.get("forces"),
+            "stress": entry.get("stress"),
+            "magmom": [
+                s.get("properties", {}).get("magmom", 0.0)
+                for s in entry["structure"].get("sites", [])
+            ],
         }
+        
+        # ex = DataExtracter([entry])
+
+        # label_data = {
+        #     "energy_per_atom": ex.get_energies_per_atom()[0],
+        #     "force": ex.get_forces(),
+        #     "stress": ex.get_stresses(),
+        #     "magmom": ex.get_magmoms(),
+        # }
 
         mp_id = entry.get("provenance", {}).get("original_mp_id", "unknown")
         graph_id = entry.get("matpes_id", f"{mp_id}-0")
