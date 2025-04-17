@@ -56,7 +56,7 @@ def main():
     if 'corrected_energy' not in all_data[0]:
         # Correct the energies
         energy_corrector = EnergyCorrector(all_data)
-        all_data = energy_corrector.apply_corrections
+        all_data = energy_corrector.apply_corrections()
         # Overwrite the JSON file with corrected energies
         write_json(json_file, all_data)
     else:

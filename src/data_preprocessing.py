@@ -180,6 +180,9 @@ class EnergyCorrector:
             corrected_energy = self.correct_entry_energy(entry)
             entry["corrected_energy"] = corrected_energy
             corrected_entries.append(entry)
+            # Printing every time 2000 entries are processed
+            if len(corrected_entries) % 2000 == 0:
+                print(f"Processed {len(corrected_entries)} entries.")
         return corrected_entries
 
     def correct_entry_energy(self, entry):
