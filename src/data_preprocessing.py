@@ -4,6 +4,7 @@ import json
 import os
 import sys
 from pymatgen.core.structure import Structure
+from pymatgen.core import Composition
 from typing import List, Optional
 import gzip 
 
@@ -149,12 +150,8 @@ class DataExtracter:
         return [d.get("stress", []) for d in self.data]
 
 class EnergyCorrector:
-    # Composition-based corrections from MaterialsProject2020Compatibility
     corrections = {
-        "oxide": -0.687,
-        "peroxide": -0.465,
-        "superoxide": -0.161,
-        "ozonide": 0,
+        "O": -0.687,  # assume all O is oxide (safe for most of MatPES)
         "S": -0.503,
         "F": -0.462,
         "Cl": -0.614,
@@ -166,46 +163,28 @@ class EnergyCorrector:
         "Sb": -0.192,
         "Te": -0.422,
         "H": -0.179,
+        # Skip peroxide/superoxide/ozonide for speed
     }
 
     def __init__(self, data):
-        """
-        data: a JSON list of entries, where each entry contains a 'structure' and 'energy'
-        """
         self.data = data
 
     def apply_corrections(self):
         corrected_entries = []
-        for entry in self.data:
+        for idx, entry in enumerate(self.data):
             corrected_energy = self.correct_entry_energy(entry)
             entry["corrected_energy"] = corrected_energy
             corrected_entries.append(entry)
-            # Printing every time 2000 entries are processed
-            if len(corrected_entries) % 2000 == 0:
-                print(f"Processed {len(corrected_entries)} entries.")
+            if (idx + 1) % 2000 == 0:
+                print(f"Processed {idx + 1} entries.")
         return corrected_entries
 
     def correct_entry_energy(self, entry):
-        struct_dict = entry["structure"]
-        structure = Structure.from_dict(struct_dict)
-        structure.add_oxidation_state_by_guess()
-
+        comp = Composition(entry["composition"])
         correction = 0.0
-        for site in structure:
-            el = site.specie.symbol
-            ox = site.specie.oxi_state
-
-            if el == "O":
-                if abs(ox + 2) < 0.1:
-                    correction += self.corrections["oxide"]
-                elif abs(ox + 1) < 0.1:
-                    correction += self.corrections["peroxide"]
-                elif abs(ox + 0.5) < 0.1:
-                    correction += self.corrections["superoxide"]
-                elif abs(ox + 1/3) < 0.05:
-                    correction += self.corrections["ozonide"]
-            elif el in self.corrections:
-                correction += self.corrections[el]
-
+        for el, amt in comp.items():
+            if str(el) in self.corrections:
+                correction += amt * self.corrections[str(el)]
         return entry["energy"] + correction
+
         

@@ -30,7 +30,7 @@ def get_structure_dicts(json_path):
         struct = Structure.from_dict(entry["structure"])
         n_atoms = entry['nsites']
         label_data = {
-            "energy_per_atom": entry.get("energy") / n_atoms,
+            "energy_per_atom": entry.get("corrected_energy") / n_atoms,
             "force": entry.get("forces"),
             "stress": entry.get("stress"),
             "magmom": [
