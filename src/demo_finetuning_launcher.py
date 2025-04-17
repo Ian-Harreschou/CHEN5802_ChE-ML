@@ -35,7 +35,7 @@ ZIPPED_JSON_FILE = JSON_FILE + '.gz'
 # =========================================
 
 sys.path.append(os.path.expanduser(SRC_CODE_PATH))
-from data_preprocessing import Filter, DataExtracter, read_json, write_json, extract_json_from_gzip
+from data_preprocessing import Filter, DataExtracter, EnergyCorrector, read_json, write_json, extract_json_from_gzip
 
 def main():
 
@@ -51,7 +51,17 @@ def main():
         all_data = read_json(json_file)
     else:
         raise ValueError(f"No data files found in {DATA_PATH}")
-        
+    
+    # Check if the JSON energies have been corrected
+    if 'corrected_energy' not in all_data[0]:
+        # Correct the energies
+        energy_corrector = EnergyCorrector(all_data)
+        all_data = energy_corrector.apply_corrections
+        # Overwrite the JSON file with corrected energies
+        write_json(json_file, all_data)
+    else:
+        print("Energies already corrected. Skipping energy correction step.")
+
     # Filter the dataset
     filter = Filter(all_data)
     filtered_data = filter.filter(material_type=MATERIAL_TYPE)

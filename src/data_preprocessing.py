@@ -147,3 +147,62 @@ class DataExtracter:
     
     def get_stresses(self) -> List[List[float]]:
         return [d.get("stress", []) for d in self.data]
+
+class EnergyCorrector:
+    # Composition-based corrections from MaterialsProject2020Compatibility
+    corrections = {
+        "oxide": -0.687,
+        "peroxide": -0.465,
+        "superoxide": -0.161,
+        "ozonide": 0,
+        "S": -0.503,
+        "F": -0.462,
+        "Cl": -0.614,
+        "Br": -0.534,
+        "I": -0.379,
+        "N": -0.361,
+        "Se": -0.472,
+        "Si": 0.071,
+        "Sb": -0.192,
+        "Te": -0.422,
+        "H": -0.179,
+    }
+
+    def __init__(self, data):
+        """
+        data: a JSON list of entries, where each entry contains a 'structure' and 'energy'
+        """
+        self.data = data
+
+    def apply_corrections(self):
+        corrected_entries = []
+        for entry in self.data:
+            corrected_energy = self.correct_entry_energy(entry)
+            entry["corrected_energy"] = corrected_energy
+            corrected_entries.append(entry)
+        return corrected_entries
+
+    def correct_entry_energy(self, entry):
+        struct_dict = entry["structure"]
+        structure = Structure.from_dict(struct_dict)
+        structure.add_oxidation_state_by_guess()
+
+        correction = 0.0
+        for site in structure:
+            el = site.specie.symbol
+            ox = site.specie.oxi_state
+
+            if el == "O":
+                if abs(ox + 2) < 0.1:
+                    correction += self.corrections["oxide"]
+                elif abs(ox + 1) < 0.1:
+                    correction += self.corrections["peroxide"]
+                elif abs(ox + 0.5) < 0.1:
+                    correction += self.corrections["superoxide"]
+                elif abs(ox + 1/3) < 0.05:
+                    correction += self.corrections["ozonide"]
+            elif el in self.corrections:
+                correction += self.corrections[el]
+
+        return entry["energy"] + correction
+        
