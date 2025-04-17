@@ -7,7 +7,17 @@ This repository represents a collaborative project for a course offered at the U
 
 ## Dependencies
 
+To build the dependencies you should use the .yml file in the repo. Here is how you do it
 
+```
+conda env create -f 250310-ml-cuda-clean.yml
+```
+
+and then to activate it
+
+```
+conda activate ml-cuda
+```
 
 ## Data
 
