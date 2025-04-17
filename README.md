@@ -7,7 +7,7 @@ This repository represents a collaborative project for a course offered at the U
 
 ## Dependencies
 
-Requires Python 3.9 or newer due to `scikit-learn` compatibility. Other module dependencies are listed in `deps.txt`.
+
 
 ## Data
 
