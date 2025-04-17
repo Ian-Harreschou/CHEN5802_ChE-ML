@@ -6,7 +6,7 @@ CHEN5802 (UofM) - Machine Learning Applications in ChemE &amp; MatSci
 This repository represents a collaborative project for a course offered at the University of Minnesota on the application of machine learning (ML) techniques to chemical engineering and materials science problems. The project explores how ML techniques can be used to approximate interatomic forces in molecules, aiming to enhance computational efficiency in molecular simulations.
 
 ## Dependencies
-
+If you have an NVIDIA GPU the following applies to you:
 To build the dependencies you should use the .yml file in the repo. Here is how you do it
 
 ```
