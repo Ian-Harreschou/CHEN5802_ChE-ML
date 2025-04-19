@@ -76,11 +76,16 @@ class CHGNetEnergyRegressor:
         self.feature_vectors = []
         if not os.path.exists(os.path.join(DATA_DIR,'features.csv')):
             for idx, struct in enumerate(self.structures):
-                fea = self.chgnet.predict_structure(
-                    struct, return_crystal_feas=True
-                )["crystal_fea"]
-                self.feature_vectors.append(fea)
-                print(f"[{idx+1}/{len(self.structures)}] feature extracted")
+                try:
+                    fea = self.chgnet.predict_structure(
+                        struct, return_crystal_feas=True
+                    )["crystal_fea"]
+                    self.feature_vectors.append(fea)
+                    print(f"[{idx+1}/{len(self.structures)}] feature extracted")
+                except ValueError as e:
+                    print(f"Error extracting features for structure {idx}: {e}")
+                    self.feature_vectors.append([np.nan] * self.chgnet.n_features)
+                    
             with open(os.path.join(DATA_DIR,'features.csv'), 'w', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerows(self.feature_vectors)
