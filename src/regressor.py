@@ -18,6 +18,8 @@ SRC_CODE_PATH = os.path.join('~','bin','CHEN5802_ChE-ML','src')
 
 DATA_SET_PATH = os.path.join('..','data','MatPES-PBE-2025.1.json')
 
+DATA_DIR = os.path.join('..','data')
+
 MATERIAL_TYPE = 'all'
 
 sys.path.append(os.path.expanduser(SRC_CODE_PATH))
@@ -82,6 +84,8 @@ class CHGNetEnergyRegressor:
         """Build a DataFrame where columns are embedding dims and final col is energy."""
         self.df = pd.DataFrame(self.feature_vectors)
         self.df["energy"] = self.energies
+        # dropping NaN rows
+        self.df.dropna(inplace=True)
 
     def split_data(self):
         """Split X/y into train and test sets."""
@@ -190,7 +194,7 @@ class CHGNetEnergyRegressor:
         plt.xlabel("True Energy (eV/atom)")
         plt.ylabel("Predicted Energy (eV/atom)")
         plt.title("Parity Plot")
-        plt.savefig('parity_plot.png')
+        plt.savefig(os.path.join(DATA_DIR,'parity_plot.png'))
 
     def plot_residuals(self):
         """Histogram of residuals on test set."""
@@ -200,7 +204,7 @@ class CHGNetEnergyRegressor:
         plt.xlabel("Residual (eV/atom)")
         plt.ylabel("Frequency")
         plt.title("Residual Distribution")
-        plt.savefig('residuals.png')
+        plt.savefig(os.path.join(DATA_DIR,'residuals.png'))
 
     def plot_feature_importance(self, top_n: int = 20):
         """Bar chart of top_n feature importances from RF."""
@@ -212,7 +216,7 @@ class CHGNetEnergyRegressor:
         plt.title(f"Top-{top_n} Feature Importances")
         plt.xticks(rotation=90)
         plt.tight_layout()
-        plt.savefig('feature_importance.png')
+        plt.savefig(os.path.join(DATA_DIR,'feature_importance.png'))
 
     def plot_permutation_importance(self, top_n: int = 20, n_repeats: int = 10):
         """Bar chart of top_n permutation importances."""
@@ -227,7 +231,7 @@ class CHGNetEnergyRegressor:
         plt.title(f"Top-{top_n} Permutation Importances")
         plt.xticks(rotation=90)
         plt.tight_layout()
-        plt.savefig('permutation_importance.png')
+        plt.savefig(os.path.join(DATA_DIR,'permutation_importance.png'))
 
     def plot_embedding_pca(self):
         """2D PCA of raw CHGNet embeddings, colored by true energy."""
@@ -237,7 +241,7 @@ class CHGNetEnergyRegressor:
         plt.title("PCA of CHGNet Embeddings")
         plt.xlabel("PC1")
         plt.ylabel("PC2")
-        plt.savefig('embedding_pca.png')
+        plt.savefig(os.path.join(DATA_DIR,'embedding_pca.png'))
 
     def plot_embedding_tsne(self, **kwargs):
         """2D t-SNE of embeddings, colored by true energy."""
