@@ -83,8 +83,8 @@ class CHGNetEnergyRegressor:
                     self.feature_vectors.append(fea)
                     print(f"[{idx+1}/{len(self.structures)}] feature extracted")
                 except ValueError as e:
-                    print(f"Error extracting features for structure {idx}: {e}")
-                    self.feature_vectors.append([np.nan] * self.chgnet.n_features)
+                    print(f"Skipping structure {idx} due to error: {e}")
+                    self.feature_vectors.append([np.nan] * 64) 
                     
             with open(os.path.join(DATA_DIR,'features.csv'), 'w', newline='') as f:
                 writer = csv.writer(f)
