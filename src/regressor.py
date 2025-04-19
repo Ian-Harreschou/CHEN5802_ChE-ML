@@ -13,6 +13,7 @@ import seaborn as sns
 import pandas as pd
 import os
 import sys
+import csv
 
 SRC_CODE_PATH = os.path.join('~','bin','CHEN5802_ChE-ML','src')
 
@@ -73,12 +74,22 @@ class CHGNetEnergyRegressor:
     def extract_features(self):
         """Run CHGNet on every structure to get its crystal embedding."""
         self.feature_vectors = []
-        for idx, struct in enumerate(self.structures):
-            fea = self.chgnet.predict_structure(
-                struct, return_crystal_feas=True
-            )["crystal_fea"]
-            self.feature_vectors.append(fea)
-            print(f"[{idx+1}/{len(self.structures)}] feature extracted")
+        if not os.path.exists(os.path.join(DATA_DIR,'features.csv')):
+            for idx, struct in enumerate(self.structures):
+                fea = self.chgnet.predict_structure(
+                    struct, return_crystal_feas=True
+                )["crystal_fea"]
+                self.feature_vectors.append(fea)
+                print(f"[{idx+1}/{len(self.structures)}] feature extracted")
+            with open(os.path.join(DATA_DIR,'features.csv'), 'w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerows(self.feature_vectors)
+            print(f"Feature vectors saved to {os.path.join(DATA_DIR,'features.csv')}")
+        else:
+            with open(os.path.join(DATA_DIR,'features.csv'), 'r') as f:
+                reader = csv.reader(f)
+                self.feature_vectors = list(reader)
+            print(f"Feature vectors loaded from {os.path.join(DATA_DIR,'features.csv')}")
 
     def create_dataframe(self):
         """Build a DataFrame where columns are embedding dims and final col is energy."""
