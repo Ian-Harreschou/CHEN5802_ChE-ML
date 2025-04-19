@@ -188,7 +188,7 @@ class CHGNetEnergyRegressor:
         plt.xlabel("True Energy (eV/atom)")
         plt.ylabel("Predicted Energy (eV/atom)")
         plt.title("Parity Plot")
-        plt.show()
+        plt.savefig('parity_plot.png')
 
     def plot_residuals(self):
         """Histogram of residuals on test set."""
@@ -198,7 +198,7 @@ class CHGNetEnergyRegressor:
         plt.xlabel("Residual (eV/atom)")
         plt.ylabel("Frequency")
         plt.title("Residual Distribution")
-        plt.show()
+        plt.savefig('residuals.png')
 
     def plot_feature_importance(self, top_n: int = 20):
         """Bar chart of top_n feature importances from RF."""
@@ -210,7 +210,7 @@ class CHGNetEnergyRegressor:
         plt.title(f"Top-{top_n} Feature Importances")
         plt.xticks(rotation=90)
         plt.tight_layout()
-        plt.show()
+        plt.savefig('feature_importance.png')
 
     def plot_permutation_importance(self, top_n: int = 20, n_repeats: int = 10):
         """Bar chart of top_n permutation importances."""
@@ -225,7 +225,7 @@ class CHGNetEnergyRegressor:
         plt.title(f"Top-{top_n} Permutation Importances")
         plt.xticks(rotation=90)
         plt.tight_layout()
-        plt.show()
+        plt.savefig('permutation_importance.png')
 
     def plot_embedding_pca(self):
         """2D PCA of raw CHGNet embeddings, colored by true energy."""
@@ -235,7 +235,7 @@ class CHGNetEnergyRegressor:
         plt.title("PCA of CHGNet Embeddings")
         plt.xlabel("PC1")
         plt.ylabel("PC2")
-        plt.show()
+        plt.savefig('embedding_pca.png')
 
     def plot_embedding_tsne(self, **kwargs):
         """2D t-SNE of embeddings, colored by true energy."""
@@ -245,7 +245,8 @@ class CHGNetEnergyRegressor:
         plt.title("t-SNE of CHGNet Embeddings")
         plt.xlabel("Dim 1")
         plt.ylabel("Dim 2")
-        plt.show()
+        # plt.show()
+        plt.savefig('embedding_tsne.png')
 
     def plot_cluster_energy_distribution(self, n_clusters: int = 5):
         """KMeans clustering on embeddings + boxplot of energy per cluster."""
@@ -257,13 +258,15 @@ class CHGNetEnergyRegressor:
         plt.xlabel("Cluster ID")
         plt.ylabel("Energy (eV/atom)")
         plt.title("Energy Distribution per Embedding Cluster")
-        plt.show()
+        plt.savefig('cluster_energy_distribution.png')
 
     def plot_shap_summary(self, max_display: int = 20):
         """SHAP summary beeswarm for top features."""
         explainer = shap.TreeExplainer(self.rf)
         shap_vals = explainer.shap_values(self.X_test)
         shap.summary_plot(shap_vals, self.X_test, max_display=max_display)
+        # save plot
+        plt.savefig('shap_summary.png')
 
 if __name__ == "__main__":
     # Example usage
