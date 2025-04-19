@@ -271,7 +271,7 @@ class CHGNetEnergyRegressor:
 if __name__ == "__main__":
     # Example usage
     dataset = DATA_SET_PATH  # Replace with your dataset path
-    regressor = CHGNetEnergyRegressor(dataset)
+    regressor = CHGNetEnergyRegressor(read_json(dataset))
     metrics = regressor.run_pipeline()
     print(metrics)
     regressor.plot_parity()
