@@ -16,7 +16,7 @@ import sys
 
 SRC_CODE_PATH = os.path.join('~','bin','CHEN5802_ChE-ML','src')
 
-DATA_SET_PATH = os.path.join('..','data')
+DATA_SET_PATH = os.path.join('..','data','MatPES-PBE-2025.1.json')
 
 MATERIAL_TYPE = 'all'
 
@@ -272,7 +272,7 @@ class CHGNetEnergyRegressor:
 
 if __name__ == "__main__":
     # Example usage
-    dataset = read_json(DATA_SET_PATH)  # Replace with your dataset path
+    dataset = read_json(DATA_SET_PATH) # Replace with your dataset path
     filter = Filter(dataset)
     filtered_data = filter.filter(material_type=MATERIAL_TYPE)
     regressor = CHGNetEnergyRegressor(filtered_data)
