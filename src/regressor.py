@@ -18,8 +18,10 @@ SRC_CODE_PATH = os.path.join('~','bin','CHEN5802_ChE-ML','src')
 
 DATA_SET_PATH = os.path.join('..','data')
 
+MATERIAL_TYPE = 'all'
+
 sys.path.append(os.path.expanduser(SRC_CODE_PATH))
-from data_preprocessing import DataExtracter, read_json, write_json
+from data_preprocessing import DataExtracter, Filter, read_json, write_json
 
 
 class CHGNetEnergyRegressor:
@@ -270,8 +272,10 @@ class CHGNetEnergyRegressor:
 
 if __name__ == "__main__":
     # Example usage
-    dataset = DATA_SET_PATH  # Replace with your dataset path
-    regressor = CHGNetEnergyRegressor(read_json(dataset))
+    dataset = read_json(DATA_SET_PATH)  # Replace with your dataset path
+    filter = Filter(dataset)
+    filtered_data = filter.filter(material_type=MATERIAL_TYPE)
+    regressor = CHGNetEnergyRegressor(filtered_data)
     metrics = regressor.run_pipeline()
     print(metrics)
     regressor.plot_parity()

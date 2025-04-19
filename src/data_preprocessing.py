@@ -104,6 +104,8 @@ class Filter:
             return [d for d in dataset if not non_metals.intersection(d.get("elements", []))]
         elif mtype == "metal":
             return [d for d in dataset if d.get("bandgap", None) == 0.0]
+        elif mtype == 'all':
+            return dataset
         else:
             raise ValueError(f"Unknown material type: {mtype}")
         
