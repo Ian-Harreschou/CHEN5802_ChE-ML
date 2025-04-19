@@ -180,7 +180,7 @@ def main():
                 stresses=None,  
                 magmoms=None,) 
 
-            train_loader, val_loader, test_loader = get_train_val_test_loader(
+            train_loader, val_loader, test_loader = get_train_val_test_loader(dataset=dataset,
                 batch_size=8, train_ratio=0.9, val_ratio=0.05
             )
             # Load pretrained CHGNet

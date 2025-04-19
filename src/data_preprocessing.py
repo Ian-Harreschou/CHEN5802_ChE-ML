@@ -186,5 +186,3 @@ class EnergyCorrector:
             if str(el) in self.corrections:
                 correction += amt * self.corrections[str(el)]
         return entry["energy"] + correction
-
-        
