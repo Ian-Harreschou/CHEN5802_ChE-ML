@@ -106,6 +106,11 @@ class Filter:
             return [d for d in dataset if d.get("bandgap", None) == 0.0]
         elif mtype == 'all':
             return dataset
+        elif mtype == 'random-snapshot':
+            # Randomly sample 5000 entries from the dataset
+            np.random.seed(44)
+            indices = np.random.choice(len(dataset), size=5000, replace=False)
+            return [dataset[i] for i in indices]
         else:
             raise ValueError(f"Unknown material type: {mtype}")
         
