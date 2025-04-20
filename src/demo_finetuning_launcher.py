@@ -4,6 +4,9 @@ import sys
 from chgnet.model import CHGNet
 from chgnet.trainer import Trainer
 from chgnet.data.dataset import StructureData,GraphData, get_train_val_test_loader
+import torch
+from chgnet.graph.crystalgraph import CrystalGraph
+
 
 HOME = os.path.expanduser("~")
 CURR_DIR = os.getcwd()
@@ -38,6 +41,7 @@ sys.path.append(os.path.expanduser(SRC_CODE_PATH))
 from data_preprocessing import Filter, DataExtracter, EnergyCorrector, read_json, write_json, extract_json_from_gzip
 
 def main():
+    torch.serialization.add_safe_globals([CrystalGraph])
 
     ready_to_train = READY_TO_TRAIN
 

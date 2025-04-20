@@ -6,7 +6,9 @@ import time
 import multiprocessing as multiproc
 from pymatgen.core import Structure
 from chgnet.graph import CrystalGraphConverter
+from chgnet.graph.crystalgraph import CrystalGraph
 
+torch.serialization.add_safe_globals([CrystalGraph])
 
 # === CONFIG ===
 JSON_PATH = "Fe-O.json"
