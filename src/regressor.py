@@ -24,7 +24,7 @@ DATA_DIR = os.path.join('..','data')
 MATERIAL_TYPE = 'all'
 
 sys.path.append(os.path.expanduser(SRC_CODE_PATH))
-from data_preprocessing import DataExtracter, Filter, read_json, write_json
+from data_preprocessing import DataExtracter, Filter, EnergyCorrector, read_json, write_json
 
 
 class CHGNetEnergyRegressor:
@@ -303,6 +303,8 @@ if __name__ == "__main__":
     dataset = read_json(DATA_SET_PATH) # Replace with your dataset path
     filter = Filter(dataset)
     filtered_data = filter.filter(material_type=MATERIAL_TYPE)
+    energy_corrector = EnergyCorrector(filtered_data)
+    filtered_data = energy_corrector.apply_corrections()
     regressor = CHGNetEnergyRegressor(filtered_data)
     metrics = regressor.run_pipeline()
     print(metrics)
