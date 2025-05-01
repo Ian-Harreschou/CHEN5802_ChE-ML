@@ -40,16 +40,6 @@ def get_structure_dicts(json_path):
                 for s in entry["structure"].get("sites", [])
             ],
         }
-        
-        # ex = DataExtracter([entry])
-
-        # label_data = {
-        #     "energy_per_atom": ex.get_energies_per_atom()[0],
-        #     "force": ex.get_forces(),
-        #     "stress": ex.get_stresses(),
-        #     "magmom": ex.get_magmoms(),
-        # }
-
         mp_id = entry.get("provenance", {}).get("original_mp_id", "unknown")
         graph_id = entry.get("matpes_id", f"{mp_id}-0")
         structure_dicts.append((struct, label_data, mp_id, graph_id))
