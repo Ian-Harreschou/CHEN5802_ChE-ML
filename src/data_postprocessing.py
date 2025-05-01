@@ -15,9 +15,9 @@ FINE_TUNED_MODEL_PATH = '/Users/christopherakiki/bin/CHEN5802_ChE-ML/model-tarba
 sys.path.append(os.path.expanduser(SRC_CODE_DIR))
 from data_preprocessing import Filter, DataExtracter, EnergyCorrector, read_json, write_json, extract_json_from_gzip
 
-EQUILIBRIUM_DFT_DATA = '/Users/christopherakiki/CHEN5802_ChE-ML/DFT_data/data/results.json'
-PERTURBED_DFT_DATA = ''
-
+# Replace these with where your data is stored
+EQUILIBRIUM_DFT_DATA = '/Users/christopherakiki/CHEN5802_ChE-ML/DFT_data/equilibrium_data/results.json'
+PERTURBED_DFT_DATA = '/Users/christopherakiki/CHEN5802_ChE-ML/DFT_data/perturbed_data/results.json'
 
 def read_results(results_file):
     return read_json(results_file)
@@ -147,7 +147,7 @@ def main():
                                  parity_plot_with_syst_softening_corr_savename='parity_plot_finetuned_with_syst_softening_corr.png',)
 
     # Save the metrics to a json file
-    write_json(metrics, 'metrics.json')
+    write_json('metrics.json', metrics)
 
     return metrics
 
