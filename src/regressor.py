@@ -128,10 +128,10 @@ class CHGNetEnergyRegressor:
         """
         if param_grid is None:
             param_grid = {
-                "n_estimators": [10, 50, 100, 200,250,300,350,400,450,500],
-                "max_depth": [None, 10, 20, 30, 50,60,70,80,90,100,110,120],
-                "min_samples_split": [2, 5, 10, 20, 30, 40, 50],
-                "min_samples_leaf": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                "n_estimators": [10, 50, 100],
+                "max_depth": [None, 10, 50,100],
+                "min_samples_split": [2, 5, 10],
+                "min_samples_leaf": [1, 2, 3],
             }
 
         base_rf = RandomForestRegressor(random_state=self.random_state)
