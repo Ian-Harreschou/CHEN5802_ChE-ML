@@ -26,7 +26,6 @@ https://matpes.ai/
 ## MLPs:
 
 CHGNet: https://github.com/CederGroupHub/chgnet/blob/main/examples/fine_tuning.ipynb
-M3GNet: 
 
 ## License
 
