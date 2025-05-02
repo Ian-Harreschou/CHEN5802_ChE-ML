@@ -3,7 +3,7 @@ CHEN5802 (UofM) - Machine Learning Applications in ChemE &amp; MatSci
 
 ## Overview
 
-This repository represents a collaborative project for a course offered at the University of Minnesota on the application of machine learning (ML) techniques to chemical engineering and materials science problems. The project explores how ML techniques can be used to approximate interatomic forces in molecules, aiming to enhance computational efficiency in molecular simulations.
+This repository represents a collaborative project for a course offered at the University of Minnesota on the application of machine learning (ML) techniques to chemical engineering and materials science problems. The project explores how ML techniques can be used to approximate interatomic forces in crystals, aiming to enhance computational efficiency in molecular simulations.
 
 ## Dependencies
 If you have an NVIDIA GPU the following applies to you:
@@ -18,6 +18,14 @@ and then to activate it
 ```
 conda activate ml-cuda
 ```
+
+## How to use 
+
+To run a fine tuning routine, only the launcher script needs to be modified. Best practice is to copy over the launcher script into whichever directory you are operating in then change the user configurations at the top of the script to fit the needs of your run. The launcher will take care of the rest. 
+
+For running the RandomForestRegressor on the CHGNet embeddings, you do the same by copying the script into your working directory and editing the relevant parameters before launching. 
+
+For users of the minnesota supercomputing institute, to succesfully run the code, you must create the anaconda environment using the project.yml file in the github repo. Follow the same steps outlined in the GPU environment creation above
 
 ## Data
 
