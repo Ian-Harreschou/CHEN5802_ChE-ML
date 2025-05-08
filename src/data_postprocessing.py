@@ -57,7 +57,7 @@ def evaluate_and_plot(dft_results,
 
 
     # Loading the fine-tuned model
-    chgnet = CHGNet.from_file('/Users/christopherakiki/scratch/CHGNet-finetuning/trial-two/fine_tuned_models/transition-metal-oxideLR_0.001E_5FalseAC_5BC3/bestE_epoch3_e98_f193_sNA_mNA.pth.tar')
+    chgnet = CHGNet.from_file(FINE_TUNED_MODEL_PATH)
 
     # Evaluating energies on the fine-tuned model
     finetuned_energies = chgnet.predict_structure(df['structure'],task='e')
